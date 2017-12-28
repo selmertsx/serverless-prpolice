@@ -13,5 +13,8 @@
     "ts-lint": "^4.5.1",
     "ts-node": "^4.1.0",
     "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "github": "^13.0.1"
   }
 }
