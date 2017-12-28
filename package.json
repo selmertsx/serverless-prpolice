@@ -1,0 +1,8 @@
+{
+  "name": "serverless-prpolice",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:selmertsx/serverless-prpolice.git",
+  "author": "Morioka Shuhei <selmertsx@gmail.com>",
+  "license": "MIT"
+}
