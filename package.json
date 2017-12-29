@@ -5,11 +5,31 @@
   "repository": "git@github.com:selmertsx/serverless-prpolice.git",
   "author": "Morioka Shuhei <selmertsx@gmail.com>",
   "license": "MIT",
+  "jest": {
+    "globals": {
+      "__TS_CONFIG__": "tsconfig.json"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(ts)$",
+    "modulePathIgnorePatterns": [
+      "/build/",
+      "/node_modules/"
+    ],
+    "testEnvironment": "node"
+  },
   "devDependencies": {
-    "@types/jest": "^21.1.10",
+    "@types/jest": "^22.0.0",
     "@types/node": "^8.5.2",
     "aws-sam-local": "^0.2.4",
     "jest": "^22.0.4",
+    "ts-jest": "^22.0.0",
     "ts-lint": "^4.5.1",
     "ts-node": "^4.1.0",
     "typescript": "^2.6.2"

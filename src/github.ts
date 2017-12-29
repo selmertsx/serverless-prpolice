@@ -1,4 +1,4 @@
-import * as GitHubApi from 'github';
+const GitHubApi = require('github');
 
 export class GitHub {
   private readonly _github: any;
@@ -15,12 +15,10 @@ export class GitHub {
     })
   }
 
-  getFollowingForUser(username){
-    this._github.users.getFollowingForUser({
-      username: username
-    }, function(err, res){
-      if(err) throw err;
-      return res;
+  pullRequests(url){
+    return this._github.pullRequests.getAll({
+      owner: 'selmertsx',
+      repo: url
     });
   }
 }
