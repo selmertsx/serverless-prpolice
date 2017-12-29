@@ -5,6 +5,8 @@ describe('pullRequests', () => {
     const url = "https://github.com/selmertsx/serverless-prpolice";
     const github = new GitHub();
     github.authenticate();
-    console.log(github.pullRequests(url));
+    github.pullRequests(url).then(results => {
+      console.log(results);
+    });
   });
 });

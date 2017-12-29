@@ -15,10 +15,10 @@ export class GitHub {
     })
   }
 
-  pullRequests(url){
-    return this._github.pullRequests.getAll({
+  async pullRequests(url){
+    await this._github.pullRequests.getAll({
       owner: 'selmertsx',
-      repo: url
-    });
+      repo: 'serverless-prpolice'
+    })
   }
 }
