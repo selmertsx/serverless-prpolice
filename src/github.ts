@@ -7,7 +7,6 @@ export class GitHub {
     this._github = new GitHubApi()
   }
 
-  // TODO: use user token
   authenticate(){
     this._github.authenticate({
       type: 'token',
