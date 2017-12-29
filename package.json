@@ -15,6 +15,7 @@
     "typescript": "^2.6.2"
   },
   "dependencies": {
+    "@types/github": "^7.1.0",
     "github": "^13.0.1"
   }
 }
