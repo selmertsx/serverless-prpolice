@@ -5,10 +5,10 @@
   "repository": "git@github.com:selmertsx/serverless-prpolice.git",
   "author": "Morioka Shuhei <selmertsx@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
   "jest": {
-    "globals": {
-      "__TS_CONFIG__": "tsconfig.json"
-    },
     "moduleFileExtensions": [
       "ts",
       "js",

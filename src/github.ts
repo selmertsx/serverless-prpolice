@@ -1,4 +1,4 @@
-const GitHubApi = require('github');
+import GitHubApi from 'github';
 
 export class GitHub {
   private readonly _github: any;
