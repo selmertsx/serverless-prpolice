@@ -1,7 +1,8 @@
-import GitHubApi from 'github';
+import * as GitHubApi from 'github';
+import { resolve } from 'dns';
 
 export class GitHub {
-  private readonly _github: any;
+  _github: any;
 
   constructor(){
     this._github = new GitHubApi()
@@ -14,10 +15,16 @@ export class GitHub {
     })
   }
 
-  async pullRequests(url){
-    await this._github.pullRequests.getAll({
+  pullRequests(){
+    return this._github.pullRequests.getAll({
       owner: 'selmertsx',
       repo: 'serverless-prpolice'
     })
   }
 }
+
+
+const github = new GitHub();
+github.pullRequests().then((results) => {
+  console.log(results);
+});
