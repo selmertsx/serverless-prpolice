@@ -1,4 +1,4 @@
-import * as GitHubApi from 'github';
+import GitHubApi from 'github';
 import { resolve } from 'dns';
 
 export class GitHub {
