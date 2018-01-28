@@ -4,7 +4,6 @@
   ],
   "defaultSeverity": "error",
   "rules": {
-    // tslint:recmmended
     "adjacent-overload-signatures": true,
     "align": [
       false
@@ -87,7 +86,6 @@
       "check-type-operator",
       "check-preblock"
     ],
-    // Requires Type Info
     "await-promise": true,
     "match-default-export-name": false,
     "no-boolean-literal-compare": true,
