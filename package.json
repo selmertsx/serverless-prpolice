@@ -6,7 +6,8 @@
   "author": "Morioka Shuhei <selmertsx@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/jest": "^22.0.0",

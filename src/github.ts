@@ -22,9 +22,3 @@ export class GitHub {
     })
   }
 }
-
-
-const github = new GitHub();
-github.pullRequests().then((results) => {
-  console.log(results);
-});
