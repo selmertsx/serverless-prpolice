@@ -1,30 +1,24 @@
-import GitHubApi from 'github';
-import { resolve } from 'dns';
+import GitHubApi from "@octokit/rest";
+import { resolve } from "dns";
 
 export class GitHub {
-  _github: any;
+  private readonly github: any;
 
-  constructor(){
-    this._github = new GitHubApi()
+  constructor() {
+    this.github = new GitHubApi();
   }
 
-  authenticate(){
-    this._github.authenticate({
-      type: 'token',
+  public authenticate() {
+    this.github.authenticate({
+      type: "token",
       token: process.env.TOKEN
-    })
+    });
   }
 
-  pullRequests(){
-    return this._github.pullRequests.getAll({
-      owner: 'selmertsx',
-      repo: 'serverless-prpolice'
-    })
+  public pullRequests() {
+    return this.github.pullRequests.getAll({
+      owner: "selmertsx",
+      repo: "serverless-prpolice"
+    });
   }
 }
-
-
-const github = new GitHub();
-github.pullRequests().then((results) => {
-  console.log(results);
-});
