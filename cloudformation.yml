@@ -6,27 +6,49 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Role: !Ref BotIAM
-      CodeUri: ./build/src
+      CodeUri: ./build/
       Handler: index.get
       Runtime: nodejs6.10
       Timeout: 300
-      MemorySize: 1024
+      MemorySize: 128
       Events:
         GetResource:
           Type: Api
           Properties:
-            Path: /speee-chat-bot
+            Path: /get_pr_info
             Method: post
       Environment:
         Variables:
           SlackToken: !Ref SlackToken
           NodeEnv: !Ref NodeEnv
+  Challenge:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !Ref BotIAM
+      CodeUri: ./build/
+      Handler: index.challenge
+      Runtime: nodejs6.10
+      Timeout: 300
+      MemorySize: 128
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /challenge
+            Method: post
 Parameters:
   BotIAM:
     Default: ""
+    Type: String
   SlackToken:
     Default: ""
     Type: String
   NodeEnv:
     Default: "test"
+    Type: String
+  Channel:
+    Default: ""
+    Type: String
+  Token:
+    Default: ""
     Type: String

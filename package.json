@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "author": "Morioka Shuhei <selmertsx@gmail.com>",
   "dependencies": {
-    "@octokit/rest": "^14.0.8"
+    "@octokit/rest": "^14.0.8",
+    "request": "^2.83.0"
   },
   "devDependencies": {
     "@types/jest": "^22.1.1",

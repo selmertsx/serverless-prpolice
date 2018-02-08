@@ -1,0 +1,17 @@
+#!/bin/sh
+cd "$(dirname "$(perl -e 'use Cwd "abs_path";print abs_path(shift)' $0)")"
+cd ../
+BASE_DIR="$PWD"
+cp -f package.json build/package.json && cd build/ && yarn install --production
+cd $BASE_DIR
+
+aws cloudformation package \
+  --template-file cloudformation.yml \
+  --s3-bucket prpolice \
+  --output-template-file tmp/packaged.yaml
+
+aws cloudformation deploy \
+  --template-file tmp/packaged.yaml \
+  --stack-name prpolice \
+  --parameter-overrides SlackToken=$SlackToken NodeEnv=production Token=$Token Channel=$Channel BotIAM=$BotIAM\
+  --capabilities CAPABILITY_IAM

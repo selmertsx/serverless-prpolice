@@ -15,7 +15,7 @@ export class GitHub {
   public authenticate(): void {
     this.github.authenticate({
       type: "token",
-      token: process.env.TOKEN
+      token: process.env.Token
     });
   }
 

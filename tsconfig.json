@@ -17,7 +17,6 @@
     "strictNullChecks": false,
     "target": "es5",
     "traceResolution": false,
-    "sourceMap": true,
     "lib": [
       "es2017"
     ]
