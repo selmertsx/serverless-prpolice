@@ -8,8 +8,10 @@ describe("pullRequests", () => {
     const github = new GitHub(owner, repo);
     github.authenticate();
     const pullRequests = await github.pullRequests();
-    expect(pullRequests[0].url).toEqual(
-      "https://api.github.com/repos/selmertsx/serverless-prpolice/pulls/1"
-    );
+    expect(pullRequests[0]).toEqual({
+      url: "https://api.github.com/repos/selmertsx/serverless-prpolice/pulls/1",
+      reviewers: ["yhatt"],
+      title: "bugfix github.ts"
+    });
   });
 });
