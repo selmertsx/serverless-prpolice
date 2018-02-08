@@ -1,9 +1,13 @@
 export class PullRequest {
-  private readonly github: any;
-  private readonly repository: string;
+  public readonly url: string;
+  public readonly title: string;
+  public readonly reviewers: string[];
 
-  constructor(github, repository) {
-    this.github = github;
-    this.repository = repository;
+  constructor(pullRequest) {
+    this.url = pullRequest.url;
+    this.title = pullRequest.title;
+    this.reviewers = pullRequest.requested_reviewers.map(reviewer => {
+      return reviewer.login;
+    });
   }
 }
