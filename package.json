@@ -22,6 +22,7 @@
   "repository": "git@github.com:selmertsx/serverless-prpolice.git",
   "scripts": {
     "lint": "tslint 'src/**/*.ts' '__tests__/**/*.ts'",
+    "build": "tsc",
     "test": "jest"
   }
 }
