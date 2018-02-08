@@ -2,10 +2,14 @@ import GitHubApi from "@octokit/rest";
 import { resolve } from "dns";
 
 export class GitHub {
-  private readonly github: any;
+  private readonly github: GitHubApi;
+  private readonly owner: string;
+  private readonly repo: string;
 
-  constructor() {
+  constructor(owner: string, repo: string) {
     this.github = new GitHubApi();
+    this.owner = owner;
+    this.repo = repo;
   }
 
   public authenticate() {
@@ -17,8 +21,8 @@ export class GitHub {
 
   public pullRequests() {
     return this.github.pullRequests.getAll({
-      owner: "selmertsx",
-      repo: "serverless-prpolice"
+      owner: this.owner,
+      repo: this.repo
     });
   }
 }
