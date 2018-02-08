@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Serverless PR Police
+Resources:
+  GetPRInfo:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !Ref BotIAM
+      CodeUri: ./build/src
+      Handler: index.get
+      Runtime: nodejs6.10
+      Timeout: 300
+      MemorySize: 1024
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /speee-chat-bot
+            Method: post
+      Environment:
+        Variables:
+          SlackToken: !Ref SlackToken
+          NodeEnv: !Ref NodeEnv
+Parameters:
+  BotIAM:
+    Default: ""
+  SlackToken:
+    Default: ""
+    Type: String
+  NodeEnv:
+    Default: "test"
+    Type: String

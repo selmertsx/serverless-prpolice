@@ -1,0 +1,15 @@
+#!/bin/sh
+
+CMDDIR="$(dirname "$(perl -e 'use Cwd "abs_path";print abs_path(shift)' "$0")")"
+
+case "${1:-}" in
+  local) shift 1; exec "$CMDDIR/prpolice-local" "$@";;
+
+  *)
+    echo 'Usage: prpolice <subcommand> [<args>]'
+    echo
+    echo 'Subcommands of pfchecker are:'
+    echo '  local: call lambda in local condition'
+    echo
+    ;;
+esac
