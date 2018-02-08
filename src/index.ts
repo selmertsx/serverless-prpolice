@@ -1,22 +1,39 @@
-import qs from "querystring";
 import { GitHub } from "./github";
 import { Reporter } from "./reporter";
 
-const owner = process.env.Owener;
-
 // see: https://api.slack.com/events/url_verification
-export function challenge(event, context, callback) {
-  callback(null, event.challenge);
+export function verify(params, callback) {
+  const response = {
+    statusCode: 200,
+    headers: {
+      my_header: "my_value"
+    },
+    body: JSON.stringify({ challenge: params.challenge }),
+    isBase64Encoded: false
+  };
+  callback(null, response);
 }
 
-export async function get(event, context, callback) {
-  const params = qs.parse(event.body);
+export async function report(params, callback) {
   const repository = params.text.toString();
-  const github = new GitHub(owner, repository);
+  const github = new GitHub("selmertsx", repository);
   const reporter = new Reporter(github);
-
   reporter.report().catch(error => {
     console.error(error, error.stack);
     callback("Command failed.", null);
   });
+}
+
+export function index(event, context, callback) {
+  const params = JSON.parse(event.body);
+  switch (params.type) {
+    case "url_verification":
+      verify(params, callback);
+      break;
+    case "event_callback":
+      report(params, callback);
+      break;
+    default:
+      callback(`Error Occured ${params}`);
+  }
 }

@@ -7,7 +7,7 @@ Resources:
     Properties:
       Role: !Ref BotIAM
       CodeUri: ./build/
-      Handler: index.get
+      Handler: index.index
       Runtime: nodejs6.10
       Timeout: 300
       MemorySize: 128
@@ -15,27 +15,12 @@ Resources:
         GetResource:
           Type: Api
           Properties:
-            Path: /get_pr_info
+            Path: /index
             Method: post
       Environment:
         Variables:
           SlackToken: !Ref SlackToken
           NodeEnv: !Ref NodeEnv
-  Challenge:
-    Type: AWS::Serverless::Function
-    Properties:
-      Role: !Ref BotIAM
-      CodeUri: ./build/
-      Handler: index.challenge
-      Runtime: nodejs6.10
-      Timeout: 300
-      MemorySize: 128
-      Events:
-        GetResource:
-          Type: Api
-          Properties:
-            Path: /challenge
-            Method: post
 Parameters:
   BotIAM:
     Default: ""
