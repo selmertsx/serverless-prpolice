@@ -2,7 +2,7 @@ import GitHubApi from "@octokit/rest";
 import { PullRequest } from "./pull_request";
 
 export class GitHub {
-  private readonly github: GitHubApi;
+  private readonly github: any;
   private readonly owner: string;
   private readonly repo: string;
 

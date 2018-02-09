@@ -1,5 +1,5 @@
 {
-  "body": "{\"token\":\"wttnSIvkdcX3RmNTRDcH5QnH\",\"challenge\":\"OUYFbAmNTpgNodw81t6mKshyFrAi1UoRydZlXgpbEyjIzJz2iSMK\",\"type\":\"url_verification\"}",
+  "body": "{\"user\":\"wttnSIvkdcX3RmNTRDcH5QnH\",\"text\":\"OUYFbAmNTpgNodw81t6mKshyFrAi1UoRydZlXgpbEyjIzJz2iSMK\",\"type\":\"app_mention\"}",
   "resource": "/{proxy+}",
   "requestContext": {
     "resourceId": "123456",

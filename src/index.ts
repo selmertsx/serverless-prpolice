@@ -15,9 +15,8 @@ export function verify(params, callback) {
 }
 
 export async function report(params, callback) {
-  const repository = params.text.toString();
-  const github = new GitHub("selmertsx", repository);
-  const reporter = new Reporter(github);
+  const github = new GitHub("selmertsx", "serverless-prpolice");
+  const reporter = new Reporter(github, callback);
   reporter.report().catch(error => {
     console.error(error, error.stack);
     callback("Command failed.", null);
