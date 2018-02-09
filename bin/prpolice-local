@@ -7,10 +7,19 @@ yarn build
 cp -f package.json build/package.json && cd build && yarn install --production
 cd $BASE_DIR
 
+if [[ $1 = "verify" ]]; then
+  json="test_jsons/verify.json"
+elif [[ $1 = "get_pr" ]]; then
+  json="test_jsons/mention.json"
+else
+  echo 'Invalid Argument' 1>&2
+  exit 1
+fi
+
 sam local invoke GetPRInfo \
-  -e test_jsons/verify.json \
-  --template cloudformation.yml \
-  --parameter-values ParameterKey=SlackToken,ParameterValue=$SlackToken \
-  --parameter-values ParameterKey=Token,ParameterValue=$Token \
-  --parameter-values ParameterKey=Channel,ParameterValue=$Channel \
-  --parameter-values ParameterKey=NodeEnv,ParameterValue=test
+    -e ${json} \
+    --template cloudformation.yml \
+    --parameter-values ParameterKey=SlackToken,ParameterValue=$SlackToken \
+    --parameter-values ParameterKey=Token,ParameterValue=$Token \
+    --parameter-values ParameterKey=Channel,ParameterValue=$Channel \
+    --parameter-values ParameterKey=NodeEnv,ParameterValue=test

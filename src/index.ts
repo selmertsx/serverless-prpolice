@@ -30,7 +30,7 @@ export function index(event, context, callback) {
     case "url_verification":
       verify(params, callback);
       break;
-    case "event_callback":
+    case "app_mention":
       report(params, callback);
       break;
     default:
