@@ -11,13 +11,13 @@ export function verify(params, callback) {
     body: JSON.stringify({ challenge: params.challenge }),
     isBase64Encoded: false
   };
-  callback(null, response);
+  return callback(null, response);
 }
 
-export async function report(params, callback) {
+export async function report(params, callback): Promise<void> {
   const github = new GitHub("selmertsx", "serverless-prpolice");
   const reporter = new Reporter(github, callback);
-  reporter.report().catch(error => {
+  return reporter.report().catch(error => {
     console.error(error, error.stack);
     callback("Command failed.", null);
   });
@@ -27,12 +27,10 @@ export function index(event, context, callback) {
   const params = JSON.parse(event.body);
   switch (params.type) {
     case "url_verification":
-      verify(params, callback);
-      break;
+      return verify(params, callback);
     case "app_mention":
-      report(params, callback);
-      break;
+      return report(params, callback);
     default:
-      callback(`Error Occured ${params}`);
+      return callback(`Error Occured ${params}`);
   }
 }
