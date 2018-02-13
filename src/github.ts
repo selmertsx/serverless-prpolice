@@ -22,7 +22,8 @@ export class GitHub {
   public async pullRequests(): Promise<PullRequest[]> {
     const requests = await this.github.pullRequests.getAll({
       owner: this.owner,
-      repo: this.repo
+      repo: this.repo,
+      state: "open"
     });
     return requests.data.map(pr => new PullRequest(pr));
   }
