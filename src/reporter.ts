@@ -20,10 +20,12 @@ export class Reporter {
     const web = new WebClient(this.token);
 
     return pullRequests.forEach(async pr => {
-      const text = `
-      title: ${pr.title}
-      reviewers: ${pr.reviewers.join(",")}
-      `;
+      const text = [
+        `title: ${pr.title}`,
+        `url: ${pr.url}`,
+        `reviewers: ${pr.reviewers.join(",")}`
+      ].join("\n");
+
       web.chat.postMessage(this.channel, text);
     });
   }
