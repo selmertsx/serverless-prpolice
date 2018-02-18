@@ -1,5 +1,5 @@
 {
-  "body": "{\"user\":\"wttnSIvkdcX3RmNTRDcH5QnH\",\"text\":\"OUYFbAmNTpgNodw81t6mKshyFrAi1UoRydZlXgpbEyjIzJz2iSMK\",\"type\":\"app_mention\"}",
+  "body": "{\"token\":\"xxx\",\"team_id\":\"xxxx\",\"api_app_id\":\"xxx\",\"event\":{\"type\":\"app_mention\",\"user\":\"U0USER\",\"text\":\"<@UTEST> selmertsx serverless-prpolice\",\"ts\":\"1518965302.000075\",\"channel\":\"C01\",\"event_ts\":\"1518965302000075\"},\"type\":\"event_callback\",\"event_id\":\"Ev9ABM2TUZ\",\"event_time\":1518965302000075,\"authed_users\":[\"U01\"]}",
   "resource": "/{proxy+}",
   "requestContext": {
     "resourceId": "123456",
