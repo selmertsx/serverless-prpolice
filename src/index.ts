@@ -15,20 +15,30 @@ export function verify(params, callback) {
 }
 
 export async function report(params, callback): Promise<void> {
-  const github = new GitHub("selmertsx", "serverless-prpolice");
-  const reporter = new Reporter(github, callback);
-  return reporter.report().catch(error => {
-    console.error(error, error.stack);
-    callback("Command failed.", null);
-  });
+  const args = params.event.text.split(" ");
+  const channelID = params.event.channel;
+  const github = new GitHub(args[1], args[2]);
+  github.authenticate();
+  const reporter = new Reporter(github, callback, channelID);
+
+  return reporter
+    .report()
+    .then(() => {
+      callback(null, "pull request checked!!");
+    })
+    .catch(error => {
+      console.error(error, error.stack);
+      callback("Command failed.", null);
+    });
 }
 
 export function index(event, context, callback) {
   const params = JSON.parse(event.body);
+
   switch (params.type) {
     case "url_verification":
       return verify(params, callback);
-    case "app_mention":
+    case "event_callback":
       return report(params, callback);
     default:
       return callback(`Error Occured ${params}`);

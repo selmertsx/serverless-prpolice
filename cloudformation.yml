@@ -21,6 +21,7 @@ Resources:
         Variables:
           SlackToken: !Ref SlackToken
           NodeEnv: !Ref NodeEnv
+          Token: !Ref Token
 Parameters:
   BotIAM:
     Default: ""
@@ -30,9 +31,6 @@ Parameters:
     Type: String
   NodeEnv:
     Default: "test"
-    Type: String
-  Channel:
-    Default: ""
     Type: String
   Token:
     Default: ""
