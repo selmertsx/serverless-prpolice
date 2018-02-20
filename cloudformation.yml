@@ -9,6 +9,7 @@ Resources:
       CodeUri: ./build/
       Handler: index.index
       Runtime: nodejs6.10
+      Policies: AmazonDynamoDBFullAccess
       Timeout: 300
       MemorySize: 128
       Events:
@@ -22,6 +23,14 @@ Resources:
           SlackToken: !Ref SlackToken
           NodeEnv: !Ref NodeEnv
           Token: !Ref Token
+          TABLE_NAME: !Ref User
+  User:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: id
+        Type: String
+
 Parameters:
   BotIAM:
     Default: ""
