@@ -1,5 +1,6 @@
 import { GitHub } from "./github";
 import { Reporter } from "./reporter";
+import { User } from "./user";
 
 // see: https://api.slack.com/events/url_verification
 export function verify(params, callback) {
@@ -31,7 +32,12 @@ export async function report(params, callback): Promise<void> {
     });
 }
 
-export async function setAccount(params, callback): Promise<void> {}
+export async function setAccount(params, callback): Promise<void> {
+  const args = params.event.text.match(/github\saccount\s(.*)/);
+  const channelID = params.event.channel;
+  const slackID = params.event.user;
+  const user = new User(slackID, args[1]);
+}
 
 export function index(event, context, callback) {
   const params = JSON.parse(event.body);
