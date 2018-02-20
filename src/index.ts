@@ -15,12 +15,11 @@ export function verify(params, callback) {
 }
 
 export async function report(params, callback): Promise<void> {
-  const args = params.event.text.split(" ");
+  const args = params.event.text.match(/get_pr\s(.*)\s(.*)/);
   const channelID = params.event.channel;
   const github = new GitHub(args[1], args[2]);
   github.authenticate();
   const reporter = new Reporter(github, callback, channelID);
-
   return reporter
     .report()
     .then(() => {
@@ -32,14 +31,21 @@ export async function report(params, callback): Promise<void> {
     });
 }
 
+export async function setAccount(params, callback): Promise<void> {}
+
 export function index(event, context, callback) {
   const params = JSON.parse(event.body);
-
   switch (params.type) {
     case "url_verification":
       return verify(params, callback);
     case "event_callback":
-      return report(params, callback);
+      const command = params.event.text;
+      if (/get_pr/.test(command)) {
+        return report(params, callback);
+      } else if (/github\saccount/.test(command)) {
+        return setAccount(params, callback);
+      }
+      break;
     default:
       return callback(`Error Occured ${params}`);
   }
