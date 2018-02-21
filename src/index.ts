@@ -2,6 +2,10 @@ import { GitHub } from "./github";
 import { Reporter } from "./reporter";
 import { User } from "./user";
 
+import AWS = require("aws-sdk");
+const dynamo = new AWS.DynamoDB.DocumentClient();
+const tableName = process.env.TableName;
+
 // see: https://api.slack.com/events/url_verification
 export function verify(params, callback) {
   const response = {
@@ -37,6 +41,27 @@ export async function setAccount(params, callback): Promise<void> {
   const channelID = params.event.channel;
   const slackID = params.event.user;
   const user = new User(slackID, args[1]);
+
+  const record = {
+    TableName: tableName,
+    Item: {
+      id: "IDhogehoge",
+      thing: "hoge"
+    }
+  };
+
+  dynamo.put(record, (err, data) => {
+    if (err) {
+      console.error(
+        "Unable to add device. Error JSON:",
+        JSON.stringify(err, null, 2)
+      );
+      callback(err);
+    } else {
+      console.log("Added device:", JSON.stringify(data, null, 2));
+      callback(null, "DynamoDB updated");
+    }
+  });
 }
 
 export function index(event, context, callback) {

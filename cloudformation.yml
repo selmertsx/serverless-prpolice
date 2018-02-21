@@ -2,6 +2,9 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Serverless PR Police
 Resources:
+  User:
+    Type: AWS::Serverless::SimpleTable
+
   GetPRInfo:
     Type: AWS::Serverless::Function
     Properties:
@@ -23,14 +26,7 @@ Resources:
           SlackToken: !Ref SlackToken
           NodeEnv: !Ref NodeEnv
           Token: !Ref Token
-          TABLE_NAME: !Ref User
-  User:
-    Type: AWS::Serverless::SimpleTable
-    Properties:
-      PrimaryKey:
-        Name: id
-        Type: String
-
+          TableName: !Ref User
 Parameters:
   BotIAM:
     Default: ""
