@@ -1,0 +1,5 @@
+#!/bin/sh
+cd "$(dirname "$(perl -e 'use Cwd "abs_path";print abs_path(shift)' $0)")"
+cd ../
+
+java -Djava.library.path=./db/DynamoDBLocal_lib -jar ./db/DynamoDBLocal.jar -sharedDb

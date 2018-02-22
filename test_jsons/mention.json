@@ -1,5 +1,5 @@
 {
-  "body": "{\"token\":\"xxx\",\"team_id\":\"xxxx\",\"api_app_id\":\"xxx\",\"event\":{\"type\":\"app_mention\",\"user\":\"U0USER\",\"text\":\"<@UTEST> get_pr selmertsx serverless-prpolice\",\"ts\":\"1518965302.000075\",\"channel\":\"C0HMZBC6A\",\"event_ts\":\"1518965302000075\"},\"type\":\"event_callback\",\"event_id\":\"Ev9ABM2TUZ\",\"event_time\":1518965302000075,\"authed_users\":[\"U01\"]}",
+  "body": "{\"token\":\"xxx\",\"team_id\":\"xxxx\",\"api_app_id\":\"xxx\",\"event\":{\"type\":\"app_mention\",\"user\":\"U0USER\",\"text\":\"<@UTEST> get_pr selmertsx serverless-prpolice\",\"ts\":\"1518965302.000075\",\"channel\":\"C8B7J7XJA\",\"event_ts\":\"1518965302000075\"},\"type\":\"event_callback\",\"event_id\":\"Ev9ABM2TUZ\",\"event_time\":1518965302000075,\"authed_users\":[\"U01\"]}",
   "resource": "/{proxy+}",
   "requestContext": {
     "resourceId": "123456",

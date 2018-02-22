@@ -2,17 +2,12 @@ import { WebClient } from "@slack/client";
 import { GitHub } from "./github";
 
 export class Reporter {
-  private readonly apiURL = "https://slack.com/api/chat.postMessage";
-  private readonly color = "#FF8822";
   private readonly github: GitHub;
   private readonly token = process.env.SlackToken;
-  private readonly callback: any;
-  private readonly web: WebClient;
   private readonly channelID;
 
-  constructor(github: GitHub, callback, channelId: string) {
+  constructor(github: GitHub, channelId: string) {
     this.github = github;
-    this.callback = callback;
     this.channelID = channelId;
   }
 
@@ -26,7 +21,7 @@ export class Reporter {
         `reviewers: ${pr.reviewers.join(",")}`
       ].join("\n");
 
-      web.chat.postMessage(this.channelID, text);
+      await web.chat.postMessage(this.channelID, text);
     });
   }
 }

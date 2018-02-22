@@ -3,14 +3,16 @@
 CMDDIR="$(dirname "$(perl -e 'use Cwd "abs_path";print abs_path(shift)' "$0")")"
 
 case "${1:-}" in
-  local) shift 1; exec "$CMDDIR/prpolice-local" "$@";;
   deploy) shift 1; exec "$CMDDIR/prpolice-deploy" "$@";;
+  dynamo) shift 1; exec "$CMDDIR/prpolice-dynamo" "$@";;
+  local) shift 1; exec "$CMDDIR/prpolice-local" "$@";;
   *)
     echo 'Usage: prpolice <subcommand> [<args>]'
     echo
     echo 'Subcommands of pfchecker are:'
-    echo '  local: call lambda in local condition'
     echo '  deploy: deploy lambda function'
+    echo '  dynamo: run local dynamo db'
+    echo '  local: call lambda in local condition'
     echo
     ;;
 esac
