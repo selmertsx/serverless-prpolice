@@ -3,6 +3,19 @@ const dynamo = new AWS.DynamoDB.DocumentClient();
 const tableName = process.env.TableName;
 
 export class User {
+  public static async findByGitHubAccount(account) {
+    const params = {
+      TableName: tableName,
+      Key: {
+        id: account
+      }
+    };
+
+    return await dynamo.get(params, (err, data) => {
+      return data;
+    });
+  }
+
   public slackId: string;
   public githubAccount: string;
 
@@ -15,8 +28,8 @@ export class User {
     const record = {
       TableName: tableName,
       Item: {
-        id: this.slackId,
-        thing: this.githubAccount
+        id: this.githubAccount,
+        thing: this.slackId
       }
     };
 
