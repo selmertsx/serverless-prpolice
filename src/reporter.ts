@@ -1,5 +1,6 @@
 import { WebClient } from "@slack/client";
 import { GitHub } from "./github";
+import { User } from "./user";
 
 export class Reporter {
   private readonly github: GitHub;
@@ -15,10 +16,14 @@ export class Reporter {
     const pullRequests = await this.github.pullRequests();
     const web = new WebClient(this.token);
     return pullRequests.forEach(async pr => {
+      const slackIds = pr.reviewers.map(async reviewer => {
+        return await User.findByGitHubAccount(reviewer);
+      });
+
       const text = [
         `title: ${pr.title}`,
         `url: ${pr.url}`,
-        `reviewers: ${pr.reviewers.join(",")}`
+        `reviewers: ${slackIds.join(",")}`
       ].join("\n");
 
       await web.chat.postMessage(this.channelID, text);
