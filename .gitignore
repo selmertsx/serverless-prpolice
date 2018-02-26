@@ -7,5 +7,5 @@ build/**
 
 tmp/**
 .envrc.local
-
 .vscode
+shared-local-instance.db
