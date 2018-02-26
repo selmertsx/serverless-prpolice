@@ -19,7 +19,8 @@ export class Reporter {
       const slackIds = pr.reviewers.map(async reviewer => {
         return await User.findByGitHubAccount(reviewer);
       });
-
+      console.log("~~~~~~ error ~~~~~~");
+      console.log(slackIds);
       const text = [
         `title: ${pr.title}`,
         `url: ${pr.url}`,
