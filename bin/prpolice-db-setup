@@ -1,0 +1,12 @@
+#!/bin/sh
+cd "$(dirname "$(perl -e 'use Cwd "abs_path";print abs_path(shift)' $0)")"
+cd ../
+BASE_DIR="$PWD"
+
+aws dynamodb create-table \
+  --table-name User \
+  --attribute-definitions \
+    AttributeName=Id,AttributeType=S \
+  --key-schema AttributeName=Id,KeyType=HASH \
+  --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 \
+  --endpoint-url http://localhost:8000

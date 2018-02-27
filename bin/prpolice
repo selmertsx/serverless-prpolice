@@ -6,6 +6,7 @@ case "${1:-}" in
   deploy) shift 1; exec "$CMDDIR/prpolice-deploy" "$@";;
   dynamo) shift 1; exec "$CMDDIR/prpolice-dynamo" "$@";;
   local) shift 1; exec "$CMDDIR/prpolice-local" "$@";;
+  setup) shift 1; exec "$CMDDIR/prpolice-db-setup" "$@";;
   *)
     echo 'Usage: prpolice <subcommand> [<args>]'
     echo
@@ -13,6 +14,7 @@ case "${1:-}" in
     echo '  deploy: deploy lambda function'
     echo '  dynamo: run local dynamo db'
     echo '  local: call lambda in local condition'
+    echo '  setup: create local dynamodb table'
     echo
     ;;
 esac
