@@ -15,18 +15,16 @@ export class Reporter {
   public async report(): Promise<void> {
     const pullRequests = await this.github.pullRequests();
     const web = new WebClient(this.token);
-    return pullRequests.forEach(async pr => {
+
+    pullRequests.forEach(async pr => {
       const slackIds = pr.reviewers.map(async reviewer => {
         return await User.findByGitHubAccount(reviewer);
       });
-      console.log("~~~~~~ error ~~~~~~");
-      console.log(slackIds);
       const text = [
         `title: ${pr.title}`,
         `url: ${pr.url}`,
         `reviewers: ${slackIds.join(",")}`
       ].join("\n");
-
       await web.chat.postMessage(this.channelID, text);
     });
   }
