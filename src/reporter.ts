@@ -16,7 +16,7 @@ export class Reporter {
     const pullRequests = await this.github.pullRequests();
     const web = new WebClient(this.token);
 
-    pullRequests.forEach(async pr => {
+    return pullRequests.forEach(async pr => {
       const slackIds = pr.reviewers.map(async reviewer => {
         return await User.findByGitHubAccount(reviewer);
       });

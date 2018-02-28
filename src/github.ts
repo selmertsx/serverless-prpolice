@@ -13,7 +13,7 @@ export class GitHub {
   }
 
   public authenticate(): void {
-    this.github.authenticate({
+    return this.github.authenticate({
       type: "token",
       token: process.env.Token
     });
