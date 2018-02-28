@@ -25,7 +25,12 @@ export class Reporter {
         `url: ${pr.url}`,
         `reviewers: ${slackIds.join(",")}`
       ].join("\n");
-      await web.chat.postMessage(this.channelID, text);
+
+      if (process.env.NodeEnv === "production") {
+        return await web.chat.postMessage(this.channelID, text);
+      } else {
+        return console.log(text);
+      }
     });
   }
 }
