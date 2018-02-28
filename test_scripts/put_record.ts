@@ -1,4 +1,5 @@
-import AWS = require("aws-sdk");
+import AWS from "aws-sdk";
+
 const dynamo = new AWS.DynamoDB({
   endpoint: "http://localhost:8000",
   region: "ap-north-east1"

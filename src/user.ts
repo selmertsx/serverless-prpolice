@@ -1,4 +1,4 @@
-import AWS = require("aws-sdk");
+import AWS from "aws-sdk";
 
 const dbParams =
   process.env.NodeEnv === "production"
@@ -11,13 +11,15 @@ const tableName = process.env.TableName;
 export class User {
   public static findByGitHubAccount(account) {
     return new Promise<any>(resolve => {
-      const params = {
+      const getParams = {
         TableName: tableName,
         Key: {
-          id: account
+          id: {
+            S: account
+          }
         }
       };
-      dynamo.getItem(params, (err, data) => {
+      dynamo.getItem(getParams, (err, data) => {
         resolve(data);
       });
     });
