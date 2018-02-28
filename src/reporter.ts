@@ -18,8 +18,10 @@ export class Reporter {
 
     return pullRequests.forEach(async pr => {
       const slackIds = pr.reviewers.map(async reviewer => {
-        return await User.findByGitHubAccount(reviewer);
+        const user = await User.findByGitHubAccount(reviewer);
+        return user.slackId;
       });
+
       const text = [
         `title: ${pr.title}`,
         `url: ${pr.url}`,
