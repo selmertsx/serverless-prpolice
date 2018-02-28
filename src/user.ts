@@ -19,8 +19,13 @@ export class User {
           }
         }
       };
+
       dynamo.getItem(getParams, (err, data) => {
-        resolve(data);
+        if (data.Item === undefined) {
+          return resolve(null);
+        }
+        const user = new User(data.Item.slackId.S, data.Item.id.S);
+        return resolve(user);
       });
     });
   }
@@ -40,7 +45,7 @@ export class User {
         id: {
           S: this.githubAccount
         },
-        thing: {
+        slackId: {
           S: this.slackId
         }
       }

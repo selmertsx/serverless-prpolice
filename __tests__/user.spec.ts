@@ -7,12 +7,12 @@ describe("findByGitHubAccount", () => {
   });
 
   test("if github account ID exists", async () => {
-    const data = await User.findByGitHubAccount("GitHubAccountID");
-    console.log(data);
+    const user = await User.findByGitHubAccount("GitHubAccountID");
+    expect(user.slackId).toEqual("TestSlackID");
   });
 
   test("if github account ID doesn't exist", async () => {
-    const data = await User.findByGitHubAccount("notExistID");
-    console.log(data);
+    const user = await User.findByGitHubAccount("notExistID");
+    expect(user).toBeNull();
   });
 });
