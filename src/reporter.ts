@@ -20,7 +20,7 @@ export class Reporter {
       for (const reviewer of pr.reviewers) {
         const user = await User.findByGitHubAccount(reviewer);
         const slackId = user === null ? reviewer : user.slackId;
-        slackIds.push(slackId);
+        slackIds.push(`<@${slackId}>`);
       }
 
       const text = [
