@@ -11,9 +11,8 @@ export class SlackMessage {
     this.url = pullRequest.url;
   }
 
-  public async text(): Promise<string> {
+  public async buildText(): Promise<string> {
     const slackIds: string[] = [];
-
     for (const reviewer of this.reviewers) {
       const user = await User.findByGitHubAccount(reviewer);
       const slackId = user === null ? reviewer : user.slackId;
