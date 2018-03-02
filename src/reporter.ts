@@ -20,11 +20,8 @@ export class Reporter {
       const slackIds: string[] = [];
       const message = new SlackMessage(pullRequest);
       const text = await message.buildText();
-
       if (process.env.NodeEnv === "production") {
         return await web.chat.postMessage(this.channelID, text);
-      } else {
-        return text;
       }
     });
   }

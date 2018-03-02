@@ -8,8 +8,7 @@ describe("reporter", () => {
     const owner = "selmertsx";
     const github = new GitHub(owner, repo);
     github.authenticate();
-
     const reporter = new Reporter(github, "SlackID");
-    reporter.report();
+    await expect(reporter.report()).resolves.not.toThrow();
   });
 });
