@@ -1,6 +1,6 @@
 import { WebClient } from "@slack/client";
 import { GitHub } from "./github";
-import { User } from "./user";
+import { SlackMessage } from "./slack_message";
 
 export class Reporter {
   private readonly github: GitHub;
@@ -15,24 +15,14 @@ export class Reporter {
   public async report(): Promise<void> {
     const pullRequests = await this.github.pullRequests();
     const web = new WebClient(this.token);
-    return pullRequests.forEach(async pr => {
+
+    return pullRequests.forEach(async pullRequest => {
       const slackIds: string[] = [];
-      for (const reviewer of pr.reviewers) {
-        const user = await User.findByGitHubAccount(reviewer);
-        const slackId = user === null ? reviewer : user.slackId;
-        slackIds.push(`<@${slackId}>`);
-      }
-
-      const text = [
-        `title: ${pr.title}`,
-        `url: ${pr.url}`,
-        `reviewers: ${slackIds.join(",")}`
-      ].join("\n");
-
+      const message = new SlackMessage(pullRequest);
       if (process.env.NodeEnv === "production") {
-        return await web.chat.postMessage(this.channelID, text);
+        return await web.chat.postMessage(this.channelID, message.text);
       } else {
-        return text;
+        return message.text;
       }
     });
   }
