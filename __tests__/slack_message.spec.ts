@@ -12,6 +12,7 @@ describe("test text function", () => {
     const text = message.buildText();
     await expect(message.buildText()).resolves.toEqual(
       [
+        "==============================",
         "title: bugfix github.ts",
         "url: https://github.com/selmertsx/serverless-prpolice/pulls/1",
         "reviewers: <@yhatt>"

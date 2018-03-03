@@ -20,6 +20,7 @@ export class SlackMessage {
     }
 
     return [
+      "==============================",
       `title: ${this.title}`,
       `url: ${this.url}`,
       `reviewers: ${slackIds.join(",")}`
