@@ -34,6 +34,14 @@ export function setAccount(params, callback): void {
 
 export function index(event, context, callback) {
   const params = JSON.parse(event.body);
+
+  // NOTE: 暫定的な対処方法.
+  const slackRetryReason = event.headers["X-Slack-Retry-Reason"];
+  if (slackRetryReason === "http_timeout") {
+    console.log("Ignore retrying request from Slack");
+    return callback(null, { statusCode: 200 });
+  }
+
   switch (params.type) {
     case "url_verification":
       return verify(params, callback);
@@ -46,6 +54,6 @@ export function index(event, context, callback) {
       }
       break;
     default:
-      return callback(`Error Occured ${params}`);
+      return callback(null, { statusCode: 200 });
   }
 }
