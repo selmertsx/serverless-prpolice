@@ -9,14 +9,9 @@ describe("test text function", () => {
 
   test("valid parameter was given", async () => {
     const message = new SlackMessage(testPR);
-    const text = message.buildText();
-    await expect(message.buildText()).resolves.toEqual(
-      [
-        "==============================",
-        "title: bugfix github.ts",
-        "url: https://github.com/selmertsx/serverless-prpolice/pulls/1",
-        "reviewers: <@yhatt>"
-      ].join("\n")
+    const text = message.fetchReviewerSlackId();
+    await expect(message.fetchReviewerSlackId()).resolves.toEqual(
+      "reviewers: <@yhatt>"
     );
   });
 });

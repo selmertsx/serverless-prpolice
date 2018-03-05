@@ -19,9 +19,12 @@ export class Reporter {
     return pullRequests.forEach(async pullRequest => {
       const slackIds: string[] = [];
       const message = new SlackMessage(pullRequest);
-      const text = await message.buildText();
+      const attachements = await message.attachments();
+
       if (process.env.NodeEnv === "production") {
-        return await web.chat.postMessage(this.channelID, text);
+        return await web.chat.postMessage(this.channelID, "", {
+          attachments: [attachements]
+        });
       }
     });
   }
