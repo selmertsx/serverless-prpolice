@@ -1,6 +1,6 @@
 import { WebClient } from "@slack/client";
 import { GitHub } from "./github";
-import { SlackMessage } from "./slack_message";
+import { PullRequestMessage } from "./pull_request_message";
 
 export class Reporter {
   private readonly github: GitHub;
@@ -18,7 +18,7 @@ export class Reporter {
 
     return pullRequests.forEach(async pullRequest => {
       const slackIds: string[] = [];
-      const message = new SlackMessage(pullRequest);
+      const message = new PullRequestMessage(pullRequest);
       const attachements = await message.attachments();
 
       if (process.env.NodeEnv === "production") {

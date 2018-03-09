@@ -1,4 +1,4 @@
-import { SlackMessage } from "../src/slack_message";
+import { PullRequestMessage } from "../src/pull_request_message";
 
 describe("test text function", () => {
   const testPR = {
@@ -8,7 +8,7 @@ describe("test text function", () => {
   };
 
   test("valid parameter was given", async () => {
-    const message = new SlackMessage(testPR);
+    const message = new PullRequestMessage(testPR);
     const text = message.fetchReviewerSlackId();
     await expect(message.fetchReviewerSlackId()).resolves.toEqual(
       "reviewers: <@yhatt>"

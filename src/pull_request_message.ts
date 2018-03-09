@@ -1,6 +1,6 @@
 import { User } from "./user";
 
-export class SlackMessage {
+export class PullRequestMessage {
   private readonly reviewers: any;
   private readonly title: string;
   private readonly url: string;
