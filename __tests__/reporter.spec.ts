@@ -9,6 +9,6 @@ describe("reporter", () => {
     const github = new GitHub(owner, repo);
     github.authenticate();
     const reporter = new Reporter(github, "SlackID");
-    await expect(reporter.report()).resolves.not.toThrow();
+    await expect(reporter.pullRequestReport()).resolves.not.toThrow();
   });
 });

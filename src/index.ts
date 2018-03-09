@@ -6,6 +6,7 @@ import {
 
 import { GitHub } from "./github";
 import { Reporter } from "./reporter";
+import { SlackClient } from "./slack_client";
 import { User } from "./user";
 
 // see: https://api.slack.com/events/url_verification
@@ -30,7 +31,7 @@ async function report(
   const github = new GitHub(args[1], args[2]);
   github.authenticate();
   const reporter = new Reporter(github, channelID);
-  await reporter.report();
+  await reporter.pullRequestReport();
 
   return callback(null, {
     statusCode: 200,
@@ -43,10 +44,15 @@ async function setAccount(
   callback: APIGatewayProxyCallback
 ): Promise<void> {
   const args = event.text.match(/github\saccount\s(.*)/);
-  const channelID = event.channel;
   const slackID = event.user;
   const user = new User(slackID, args[1]);
   user.register();
+
+  const client = new SlackClient(event.channel);
+  await client.postMessage(
+    `slackID: <@${slackID}>, github account: ${args[1]}`,
+    null
+  );
 
   return callback(null, {
     statusCode: 200,
