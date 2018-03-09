@@ -3,7 +3,7 @@ import { Reporter } from "./reporter";
 import { User } from "./user";
 
 // see: https://api.slack.com/events/url_verification
-export function verify(params, callback): void {
+function verify(params, callback) {
   const response = {
     statusCode: 200,
     headers: {
@@ -15,7 +15,7 @@ export function verify(params, callback): void {
   return callback(null, response);
 }
 
-export async function report(params, callback): Promise<void> {
+async function report(params, callback): Promise<void> {
   const args = params.event.text.match(/get_pr\s(.*)\s(.*)/);
   const channelID = params.event.channel;
   const github = new GitHub(args[1], args[2]);
@@ -24,7 +24,7 @@ export async function report(params, callback): Promise<void> {
   return await reporter.report();
 }
 
-export function setAccount(params, callback): void {
+function setAccount(params, callback): void {
   const args = params.event.text.match(/github\saccount\s(.*)/);
   const channelID = params.event.channel;
   const slackID = params.event.user;
