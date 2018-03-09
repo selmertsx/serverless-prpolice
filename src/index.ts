@@ -1,3 +1,9 @@
+import {
+  APIGatewayEventRequestContext,
+  APIGatewayProxyCallback,
+  APIGatewayProxyEvent
+} from "aws-lambda";
+
 import { GitHub } from "./github";
 import { Reporter } from "./reporter";
 import { User } from "./user";
@@ -32,14 +38,18 @@ function setAccount(params, callback): void {
   return user.register();
 }
 
-export function index(event, context, callback) {
+export function index(
+  event: APIGatewayProxyEvent,
+  context: APIGatewayEventRequestContext,
+  callback: APIGatewayProxyCallback
+) {
   const params = JSON.parse(event.body);
 
   // NOTE: 暫定的な対処方法.
   const slackRetryReason = event.headers["X-Slack-Retry-Reason"];
   if (slackRetryReason === "http_timeout") {
     console.log("Ignore retrying request from Slack");
-    return callback(null, { statusCode: 200 });
+    return callback(null, { statusCode: 200, body: "ok" });
   }
 
   switch (params.type) {
@@ -54,6 +64,6 @@ export function index(event, context, callback) {
       }
       break;
     default:
-      return callback(null, { statusCode: 200 });
+      return callback(null, { statusCode: 200, body: "ok" });
   }
 }
