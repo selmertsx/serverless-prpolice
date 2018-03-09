@@ -10,7 +10,7 @@ const tableName = process.env.TableName;
 
 export class User {
   public static findByGitHubAccount(account) {
-    return new Promise<any>(resolve => {
+    return new Promise<User>(resolve => {
       const getParams = {
         TableName: tableName,
         Key: {

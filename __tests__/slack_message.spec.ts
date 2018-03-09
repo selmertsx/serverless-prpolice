@@ -1,3 +1,4 @@
+import { PullRequest } from "../src/pull_request";
 import { PullRequestMessage } from "../src/pull_request_message";
 
 describe("test text function", () => {
