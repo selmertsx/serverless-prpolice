@@ -9,7 +9,7 @@ describe("pullRequests", () => {
     github.authenticate();
     const pullRequests = await github.pullRequests();
     expect(pullRequests[0]).toEqual({
-      url: "https://github.com/selmertsx/serverless-prpolice/pulls/1",
+      url: "https://github.com/selmertsx/serverless-prpolice/pull/1",
       reviewers: ["yhatt"],
       title: "bugfix github.ts"
     });

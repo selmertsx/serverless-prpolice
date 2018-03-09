@@ -15,6 +15,9 @@ export class PullRequest {
   // But if getting `html_safe` params, it calls html request many times.
   // https://octokit.github.io/rest.js/#api-PullRequests-get
   private toHtmlUrl(apiUrl: string): string {
-    return apiUrl.replace(/api\./, "").replace(/repos\//, "");
+    return apiUrl
+      .replace(/api\./, "")
+      .replace(/\/pulls\//, "/pull/")
+      .replace(/repos\//, "");
   }
 }
