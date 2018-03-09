@@ -38,6 +38,7 @@ export class User {
     this.githubAccount = githubAccount;
   }
 
+  // FIXME: async/await or Promise
   public register() {
     const record = {
       TableName: tableName,

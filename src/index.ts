@@ -9,7 +9,7 @@ import { Reporter } from "./reporter";
 import { User } from "./user";
 
 // see: https://api.slack.com/events/url_verification
-function verify(params, callback) {
+function verify(params: any, callback: APIGatewayProxyCallback) {
   const response = {
     statusCode: 200,
     headers: {
@@ -21,21 +21,37 @@ function verify(params, callback) {
   return callback(null, response);
 }
 
-async function report(params, callback): Promise<void> {
-  const args = params.event.text.match(/get_pr\s(.*)\s(.*)/);
-  const channelID = params.event.channel;
+async function report(
+  event: any,
+  callback: APIGatewayProxyCallback
+): Promise<void> {
+  const args = event.text.match(/get_pr\s(.*)\s(.*)/);
+  const channelID = event.channel;
   const github = new GitHub(args[1], args[2]);
   github.authenticate();
   const reporter = new Reporter(github, channelID);
-  return await reporter.report();
+  await reporter.report();
+
+  return callback(null, {
+    statusCode: 200,
+    body: JSON.stringify({ status: "ok" })
+  });
 }
 
-function setAccount(params, callback): void {
-  const args = params.event.text.match(/github\saccount\s(.*)/);
-  const channelID = params.event.channel;
-  const slackID = params.event.user;
+async function setAccount(
+  event: any,
+  callback: APIGatewayProxyCallback
+): Promise<void> {
+  const args = event.text.match(/github\saccount\s(.*)/);
+  const channelID = event.channel;
+  const slackID = event.user;
   const user = new User(slackID, args[1]);
-  return user.register();
+  user.register();
+
+  return callback(null, {
+    statusCode: 200,
+    body: JSON.stringify({ status: "ok" })
+  });
 }
 
 export function index(
@@ -58,12 +74,15 @@ export function index(
     case "event_callback":
       const command = params.event.text;
       if (/get_pr/.test(command)) {
-        return report(params, callback);
+        return report(params.event, callback);
       } else if (/github\saccount/.test(command)) {
-        return setAccount(params, callback);
+        return setAccount(params.event, callback);
       }
       break;
     default:
-      return callback(null, { statusCode: 200, body: "ok" });
+      return callback(null, {
+        statusCode: 200,
+        body: JSON.stringify({ status: "ok" })
+      });
   }
 }
