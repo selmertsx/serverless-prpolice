@@ -40,6 +40,27 @@ export class User {
     });
   }
 
+  public static deleteGitHubAccount(account) {
+    return new Promise<string>((resolve, reject) => {
+      const deleteParams = {
+        TableName: tableName,
+        Key: {
+          id: {
+            S: account
+          }
+        }
+      };
+
+      dynamo.deleteItem(deleteParams, (err, data) => {
+        if (err) {
+          return reject("error");
+        } else {
+          return resolve("removed");
+        }
+      });
+    });
+  }
+
   public slackId: string;
   public githubAccount: string;
 

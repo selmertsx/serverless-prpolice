@@ -20,4 +20,10 @@ describe("findByGitHubAccount", () => {
     const accounts = await User.all();
     expect(accounts).toEqual(["GitHubAccountID"]);
   });
+
+  test("delete github account", async () => {
+    const response = await User.deleteGitHubAccount("GitHubAccountID");
+    const user = await User.findByGitHubAccount("GitHubAccountID");
+    expect(user).toBeNull();
+  });
 });

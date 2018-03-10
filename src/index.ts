@@ -39,6 +39,17 @@ async function report(
   });
 }
 
+async function deleteAccount(event: any, callback: APIGatewayProxyCallback) {
+  const args = event.text.match(/delete\sgithub\saccount\s(.*)/);
+  const client = new SlackClient(event.channel);
+  const response = await User.deleteGitHubAccount(args[1]);
+  await client.postMessage(`${args[1]} ${response}`, null);
+  return callback(null, {
+    statusCode: 200,
+    body: JSON.stringify({ status: "ok" })
+  });
+}
+
 async function setAccount(
   event: any,
   callback: APIGatewayProxyCallback
@@ -66,10 +77,12 @@ function helpMessage(event: any, callback: APIGatewayProxyCallback) {
   Usage
     @{bot_name} google account {your_account_name}
     @{bot_name} get_pr {organization} {repository}
+    @{bot_name} delete github account {your_account_name}
     @{bot_name} show users
   Example
     @bot google account sample_account
     @bot get_pr selmertsx serverless-prpolice
+    @bot delete github account selmertsx
     @bot show users
   `;
 
@@ -119,6 +132,8 @@ export function index(
           return setAccount(params.event, callback);
         case /show\susers/.test(command):
           return allUsers(params.event, callback);
+        case /delete\sgithub\saccount/.test(command):
+          return deleteAccount(params.event, callback);
         default:
           return helpMessage(params.event, callback);
       }
