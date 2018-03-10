@@ -75,10 +75,10 @@ function helpMessage(event: any, callback: APIGatewayProxyCallback) {
   const client = new SlackClient(event.channel);
   const helpText = `
   Usage
-    @{bot_name} google account {your_account_name}
-    @{bot_name} get_pr {organization} {repository}
-    @{bot_name} delete github account {your_account_name}
-    @{bot_name} show users
+    @{bot_name} google account {your_account_name} # set your github account
+    @{bot_name} get_pr {organization} {repository} # get pull request information
+    @{bot_name} delete github account {your_account_name} # delete github account from dynamodb
+    @{bot_name} show users # show all github account in dynamodb
   Example
     @bot google account sample_account
     @bot get_pr selmertsx serverless-prpolice
