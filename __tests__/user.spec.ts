@@ -15,4 +15,9 @@ describe("findByGitHubAccount", () => {
     const user = await User.findByGitHubAccount("notExistID");
     expect(user).toBeNull();
   });
+
+  test("scan all account", async () => {
+    const accounts = await User.all();
+    expect(accounts).toEqual(["GitHubAccountID"]);
+  });
 });

@@ -9,6 +9,16 @@ const dynamo = new AWS.DynamoDB(dbParams);
 const tableName = process.env.TableName;
 
 export class User {
+  public static all(): Promise<string[]> {
+    return new Promise<string[]>(resolve => {
+      const scanParams = { TableName: tableName };
+      dynamo.scan(scanParams, (err, data) => {
+        const names = data.Items.map(item => item.id.S);
+        return resolve(names);
+      });
+    });
+  }
+
   public static findByGitHubAccount(account) {
     return new Promise<User>(resolve => {
       const getParams = {

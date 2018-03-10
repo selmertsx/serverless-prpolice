@@ -79,6 +79,18 @@ function helpMessage(event: any, callback: APIGatewayProxyCallback) {
   return client.postMessage(helpText, null);
 }
 
+async function allUsers(event: any, callback: APIGatewayProxyCallback) {
+  const client = new SlackClient(event.channel);
+  const userNames = await User.all();
+  const message = userNames.join("\n");
+  callback(null, {
+    statusCode: 200,
+    body: JSON.stringify({ status: "ok" })
+  });
+
+  return client.postMessage(message, null);
+}
+
 export function index(
   event: APIGatewayProxyEvent,
   context: APIGatewayEventRequestContext,
@@ -103,6 +115,8 @@ export function index(
           return report(params.event, callback);
         case /github\saccount/.test(command):
           return setAccount(params.event, callback);
+        case /show\susers/.test(command):
+          return allUsers(params.event, callback);
         default:
           return helpMessage(params.event, callback);
       }
