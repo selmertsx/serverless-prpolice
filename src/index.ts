@@ -60,6 +60,25 @@ async function setAccount(
   });
 }
 
+function helpMessage(event: any, callback: APIGatewayProxyCallback) {
+  const client = new SlackClient(event.channel);
+  const helpText = `
+  Usage
+    @{bot_name} google account {your_account_name}
+    @{bot_name} get_pr {organization} {repository}
+  Example
+    @bot google account sample_account
+    @bot get_pr selmertsx serverless-prpolice
+  `;
+
+  callback(null, {
+    statusCode: 200,
+    body: JSON.stringify({ status: "ok" })
+  });
+
+  return client.postMessage(helpText, null);
+}
+
 export function index(
   event: APIGatewayProxyEvent,
   context: APIGatewayEventRequestContext,
@@ -79,12 +98,14 @@ export function index(
       return verify(params, callback);
     case "event_callback":
       const command = params.event.text;
-      if (/get_pr/.test(command)) {
-        return report(params.event, callback);
-      } else if (/github\saccount/.test(command)) {
-        return setAccount(params.event, callback);
+      switch (true) {
+        case /get_pr/.test(command):
+          return report(params.event, callback);
+        case /github\saccount/.test(command):
+          return setAccount(params.event, callback);
+        default:
+          return helpMessage(params.event, callback);
       }
-      break;
     default:
       return callback(null, {
         statusCode: 200,
