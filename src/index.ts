@@ -66,9 +66,11 @@ function helpMessage(event: any, callback: APIGatewayProxyCallback) {
   Usage
     @{bot_name} google account {your_account_name}
     @{bot_name} get_pr {organization} {repository}
+    @{bot_name} show users
   Example
     @bot google account sample_account
     @bot get_pr selmertsx serverless-prpolice
+    @bot show users
   `;
 
   callback(null, {
