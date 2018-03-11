@@ -1,0 +1,9 @@
+export AWS_DEFAULT_PROFILE=xxx
+export AWS_DEFAULT_REGION=xxx
+export AWS_DEFAULT_OUTPUT=xxx
+export SAM_TEMPLATE_FILE=cloudformation.yml
+export SlackToken=xxx
+export BotIAM=xxx
+# GitHub Token
+export Token=xxx
+export TableName=User

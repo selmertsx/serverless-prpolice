@@ -14,5 +14,5 @@ aws cloudformation package \
 aws cloudformation deploy \
   --template-file tmp/packaged.yaml \
   --stack-name prpolice \
-  --parameter-overrides SlackToken=$SlackToken NodeEnv=production Token=$Token Channel=$Channel BotIAM=$BotIAM\
+  --parameter-overrides SlackToken=$SlackToken NodeEnv=production Token=$Token BotIAM=$BotIAM\
   --capabilities CAPABILITY_IAM
