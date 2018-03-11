@@ -7,7 +7,7 @@ cp -f package.json build/package.json && cd build/ && yarn install --production
 cd $BASE_DIR
 
 aws cloudformation package \
-  --template-file cloudformation.yml \
+  --template-file template.yml \
   --s3-bucket prpolice \
   --output-template-file tmp/packaged.yaml
 

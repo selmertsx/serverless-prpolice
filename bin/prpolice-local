@@ -18,7 +18,7 @@ fi
 
 sam local invoke GetPRInfo \
     -e ${json} \
-    --template cloudformation.yml \
+    --template template.yml \
     --parameter-values ParameterKey=SlackToken,ParameterValue=$SlackToken \
     --parameter-values ParameterKey=Token,ParameterValue=$Token \
     --parameter-values ParameterKey=NodeEnv,ParameterValue=test
