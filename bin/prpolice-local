@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -eu
 cd "$(dirname "$(perl -e 'use Cwd "abs_path";print abs_path(shift)' $0)")"
 cd ../
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -eu
 
 rm .envrc.local
 SlackToken=(`aws ssm get-parameters --names SlackToken --query "Parameters[*].{Value: Value}"  --output text`)
