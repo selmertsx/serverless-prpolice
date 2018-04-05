@@ -10,8 +10,8 @@ import { Reporter } from "./reporter";
 import { SlackClient } from "./slack_client";
 import { User } from "./user";
 
-function buildProxyResponse(status: number, body?): APIGatewayProxyResult {
-  return { statusCode: status, body: JSON.stringify(body) };
+function buildProxyResponse(statusCode: number, body?): APIGatewayProxyResult {
+  return { statusCode, body: JSON.stringify(body) };
 }
 
 async function report(event: any): Promise<void> {
