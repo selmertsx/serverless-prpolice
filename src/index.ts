@@ -14,40 +14,35 @@ function buildProxyResponse(status: number, body?): APIGatewayProxyResult {
   return { statusCode: status, body: JSON.stringify(body) };
 }
 
-function report(event: any): Promise<void> {
+async function report(event: any): Promise<void> {
   const args = event.text.match(/get_pr\s(.*)\s(.*)/);
   const channelID = event.channel;
   const github = new GitHub(args[1], args[2]);
   github.authenticate();
   const reporter = new Reporter(github, channelID);
-  return reporter.pullRequestReport();
+  return await reporter.pullRequestReport();
 }
 
-async function deleteAccount(event: any, callback: APIGatewayProxyCallback) {
+async function deleteAccount(event: any) {
   const args = event.text.match(/delete\saccount\s(.*)/);
   const client = new SlackClient(event.channel);
   const response = await User.deleteGitHubAccount(args[1]);
-  await client.postMessage(`${args[1]} ${response}`, null);
-  return callback(null, buildProxyResponse(200, { status: "OK" }));
+  return await client.postMessage(`${args[1]} ${response}`, null);
 }
 
-async function setAccount(
-  event: any,
-  callback: APIGatewayProxyCallback
-): Promise<void> {
+async function setAccount(event: any): Promise<void> {
   const args = event.text.match(/github\saccount\s(.*)/);
   const slackID = event.user;
   const user = new User(slackID, args[1]);
   user.register();
   const client = new SlackClient(event.channel);
-  await client.postMessage(
+  return await client.postMessage(
     `slackID: <@${slackID}>, github account: ${args[1]}`,
     null
   );
-  return callback(null, buildProxyResponse(200, { status: "OK" }));
 }
 
-function helpMessage(event: any, callback: APIGatewayProxyCallback) {
+async function helpMessage(event: any) {
   const client = new SlackClient(event.channel);
   const helpText = `
   Usage
@@ -61,15 +56,14 @@ function helpMessage(event: any, callback: APIGatewayProxyCallback) {
     @bot delete account selmertsx
     @bot show users
   `;
-  return client.postMessage(helpText, null);
+  return await client.postMessage(helpText, null);
 }
 
-async function allUsers(event: any, callback: APIGatewayProxyCallback) {
+async function allUsers(event: any) {
   const client = new SlackClient(event.channel);
   const userNames = await User.all();
   const message = userNames.join("\n");
-  callback(null, buildProxyResponse(200, { status: "OK" }));
-  return client.postMessage(message, null);
+  return await client.postMessage(message, null);
 }
 
 export function index(
@@ -91,16 +85,21 @@ export function index(
       switch (true) {
         case /get_pr/.test(command):
           report(params.event);
-          return callback(null, buildProxyResponse(200, { status: "OK" }));
+          break;
         case /github\saccount/.test(command):
-          return setAccount(params.event, callback);
+          setAccount(params.event);
+          break;
         case /show\susers/.test(command):
-          return allUsers(params.event, callback);
+          allUsers(params.event);
+          break;
         case /delete\saccount/.test(command):
-          return deleteAccount(params.event, callback);
+          deleteAccount(params.event);
+          break;
         default:
-          return helpMessage(params.event, callback);
+          helpMessage(params.event);
+          break;
       }
+      return callback(null, buildProxyResponse(200, { action: command }));
     default:
       return callback(null, buildProxyResponse(200, { status: "OK" }));
   }

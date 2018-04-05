@@ -17,7 +17,6 @@ export class Reporter {
       const slackIds: string[] = [];
       const message = new PullRequestMessage(pullRequest);
       const attachements = await message.attachments();
-
       if (process.env.NODE_ENV === "production") {
         const client = new SlackClient(this.channelID);
         return await client.postMessage("", attachements);
