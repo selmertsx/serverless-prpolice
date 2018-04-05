@@ -13,11 +13,7 @@ import { User } from "./user";
 function verify(params: any, callback: APIGatewayProxyCallback) {
   const response = {
     statusCode: 200,
-    headers: {
-      my_header: "my_value"
-    },
-    body: JSON.stringify({ challenge: params.challenge }),
-    isBase64Encoded: false
+    body: JSON.stringify({ challenge: params.challenge })
   };
   return callback(null, response);
 }
