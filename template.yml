@@ -25,8 +25,8 @@ Resources:
             TableName: !Ref User
       Environment:
         Variables:
-          SlackToken: !Ref SlackToken
-          NodeEnv: !Ref NodeEnv
+          SLACK_TOKEN: !Ref SlackToken
+          NODE_ENV: !Ref NodeEnv
           Token: !Ref Token
           TableName: !Ref User
 Parameters:

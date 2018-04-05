@@ -5,6 +5,7 @@ BASE_DIR="$PWD"
 cp -f package.json build/
 cd build/ && yarn install --production
 cd $BASE_DIR
+
 aws cloudformation package \
   --template-file template.yml \
   --s3-bucket prpolice \
@@ -13,5 +14,9 @@ aws cloudformation package \
 aws cloudformation deploy \
   --template-file tmp/packaged.yaml \
   --stack-name prpolice \
-  --parameter-overrides SlackToken=$SlackToken NodeEnv=production Token=$Token BotIAM=$BotIAM\
-  --capabilities CAPABILITY_IAM
+  --capabilities CAPABILITY_IAM \
+  --parameter-overrides \
+    "SlackToken=${SlackToken}" \
+    "NodeEnv=production" \
+    "Token=${Token}" \
+    "BotIAM=${BotIAM}"

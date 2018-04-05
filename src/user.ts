@@ -1,7 +1,7 @@
 import AWS from "aws-sdk";
 
 const dbParams =
-  process.env.NodeEnv === "production"
+  process.env.NODE_ENV === "production"
     ? {}
     : { endpoint: "http://localhost:8000", region: "ap-north-east1" };
 

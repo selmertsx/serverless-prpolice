@@ -2,7 +2,7 @@ import { WebClient } from "@slack/client";
 
 export class SlackClient {
   private readonly channelID: string;
-  private readonly token = process.env.SlackToken;
+  private readonly token = process.env.SLACK_TOKEN;
 
   constructor(channelID: string) {
     this.channelID = channelID;
