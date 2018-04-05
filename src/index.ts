@@ -7,6 +7,7 @@ import {
 
 import { GitHub } from "./github";
 import { Reporter } from "./reporter";
+import { ISlackEvent, ISlackEventCallback } from "./slack";
 import { SlackClient } from "./slack_client";
 import { User } from "./user";
 
@@ -71,36 +72,36 @@ export function index(
   context: APIGatewayEventRequestContext,
   callback: APIGatewayProxyCallback
 ) {
-  const params = JSON.parse(event.body);
+  const payload: ISlackEvent = JSON.parse(event.body);
   if (event.headers["X-Slack-Retry-Reason"] === "http_timeout") {
     console.log("Ignore retrying request from Slack");
     return callback(null, buildProxyResponse(200, { status: "OK" }));
   }
 
-  switch (params.type) {
+  switch (payload.type) {
     case "url_verification":
-      return callback(null, buildProxyResponse(200, params.challenge));
+      return callback(null, buildProxyResponse(200, payload.challenge));
     case "event_callback":
-      const command = params.event.text;
+      const command = payload.event.text;
       switch (true) {
         case /get_pr/.test(command):
-          report(params.event);
+          report(payload.event);
           break;
         case /github\saccount/.test(command):
-          setAccount(params.event);
+          setAccount(payload.event);
           break;
         case /show\susers/.test(command):
-          allUsers(params.event);
+          allUsers(payload.event);
           break;
         case /delete\saccount/.test(command):
-          deleteAccount(params.event);
+          deleteAccount(payload.event);
           break;
         default:
-          helpMessage(params.event);
+          helpMessage(payload.event);
           break;
       }
       return callback(null, buildProxyResponse(200, { action: command }));
     default:
-      return callback(null, buildProxyResponse(200, { status: "OK" }));
+      return callback(null, buildProxyResponse(200, { action: "default" }));
   }
 }
