@@ -14,12 +14,6 @@ function buildProxyResponse(status: number, body?): APIGatewayProxyResult {
   return { statusCode: status, body: JSON.stringify(body) };
 }
 
-// see: https://api.slack.com/events/url_verification
-function verify(params: any, callback: APIGatewayProxyCallback) {
-  const response = buildProxyResponse(200, params.challenge);
-  return callback(null, response);
-}
-
 async function report(
   event: any,
   callback: APIGatewayProxyCallback
@@ -96,7 +90,7 @@ export function index(
 
   switch (params.type) {
     case "url_verification":
-      return verify(params, callback);
+      return callback(null, buildProxyResponse(200, params.challenge));
     case "event_callback":
       const command = params.event.text;
       switch (true) {
