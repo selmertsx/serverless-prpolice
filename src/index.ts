@@ -14,17 +14,13 @@ function buildProxyResponse(status: number, body?): APIGatewayProxyResult {
   return { statusCode: status, body: JSON.stringify(body) };
 }
 
-async function report(
-  event: any,
-  callback: APIGatewayProxyCallback
-): Promise<void> {
+function report(event: any): Promise<void> {
   const args = event.text.match(/get_pr\s(.*)\s(.*)/);
   const channelID = event.channel;
   const github = new GitHub(args[1], args[2]);
   github.authenticate();
   const reporter = new Reporter(github, channelID);
-  await reporter.pullRequestReport();
-  return callback(null, buildProxyResponse(200, { status: "OK" }));
+  return reporter.pullRequestReport();
 }
 
 async function deleteAccount(event: any, callback: APIGatewayProxyCallback) {
@@ -65,7 +61,6 @@ function helpMessage(event: any, callback: APIGatewayProxyCallback) {
     @bot delete account selmertsx
     @bot show users
   `;
-  callback(null, buildProxyResponse(200, { status: "OK" }));
   return client.postMessage(helpText, null);
 }
 
@@ -95,7 +90,8 @@ export function index(
       const command = params.event.text;
       switch (true) {
         case /get_pr/.test(command):
-          return report(params.event, callback);
+          report(params.event);
+          return callback(null, buildProxyResponse(200, { status: "OK" }));
         case /github\saccount/.test(command):
           return setAccount(params.event, callback);
         case /show\susers/.test(command):
