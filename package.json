@@ -4,7 +4,7 @@
   "author": "Morioka Shuhei <selmertsx@gmail.com>",
   "dependencies": {
     "@octokit/rest": "^14.0.9",
-    "@slack/client": "^3.16.0",
+    "@slack/client": "^4.8.0",
     "aws-sdk": "^2.378.0"
   },
   "devDependencies": {
